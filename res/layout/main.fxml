@@ -17,7 +17,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.image.ImageView?>
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112"
+<?import javafx.scene.layout.Pane?>
+<BorderPane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.112"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
 
     <top>
@@ -30,14 +31,13 @@
     </top>
 
     <center>
-        <AnchorPane style="-fx-background-color: gray;">
-            <ImageView fx:id="imgPreview" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-                       AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
-        </AnchorPane>
+        <Pane style="-fx-background-color: gray;">
+            <ImageView fx:id="imgPreview"/>
+        </Pane>
     </center>
 
     <right>
-        <VBox fx:id="containerRight" spacing="4" disable="true">
+        <VBox style="-fx-background-color: whitesmoke;" fx:id="containerRight" spacing="4" disable="true">
             <padding>
                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
             </padding>

@@ -18,7 +18,8 @@ class AppClass : Application() {
     val layout = "layout/main.fxml"
 
     override fun start(stage: Stage?) {
-        stage!!.scene = Scene(load<Parent?>(javaClass.classLoader.getResource(layout)), 1280.0, 720.0)
+        stage!!.scene = Scene(load<Parent?>(javaClass.classLoader.getResource(layout)))
+        stage.title = "ImageResizer"
         stage.show()
     }
 

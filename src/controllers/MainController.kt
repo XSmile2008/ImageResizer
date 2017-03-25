@@ -116,6 +116,10 @@ class MainController : Initializable {
             updateSizesFields()
             updateDestinationSizes()
         })
+        fName.textProperty().addListener({ observable, oldValue, newValue ->
+            image!!.name = newValue
+            btnSave.isDisable = newValue.isEmpty()
+        })
     }
 
     private fun enableSizesListeners() {
