@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.imgscalr:imgscalr-lib:4.2" type="repository">
+    <properties maven-id="org.imgscalr:imgscalr-lib:4.2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/imgscalr-lib-4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

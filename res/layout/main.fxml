@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.image.ImageView?>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+
+    <top>
+        <HBox spacing="4">
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+            </padding>
+            <Button fx:id="btnOpen" onAction="#onClick" text="Open"/>
+        </HBox>
+    </top>
+
+    <center>
+        <AnchorPane style="-fx-background-color: gray;">
+            <ImageView fx:id="imgPreview" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                       AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
+        </AnchorPane>
+    </center>
+
+    <right>
+        <VBox fx:id="containerRight" spacing="4" disable="true">
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+            </padding>
+            <Label text="Asset size:"/>
+
+            <GridPane hgap="4" vgap="4">
+                <columnConstraints>
+                    <ColumnConstraints/>
+                    <ColumnConstraints/>
+                    <ColumnConstraints/>
+                    <ColumnConstraints/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                </rowConstraints>
+                <Label text="Width" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="fWith" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS"/>
+                <Label text="dp" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                <Label text="Height" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="fHeight" GridPane.columnIndex="1" GridPane.rowIndex="1" HBox.hgrow="ALWAYS"/>
+                <Label text="dp" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                <CheckBox fx:id="chbxLock" text="lock" selected="true" GridPane.rowIndex="0" GridPane.rowSpan="2" GridPane.columnIndex="3"/>
+            </GridPane>
+
+            <VBox spacing="4">
+                <fx:define>
+                    <ToggleGroup fx:id="tggOriginSize"/>
+                </fx:define>
+                <RadioButton fx:id="tgOriginSizeCustom" text="custom" toggleGroup="$tggOriginSize" selected="true"/>
+                <RadioButton fx:id="tgOriginSizeLDPI" text="ldpi(0.75x)" toggleGroup="$tggOriginSize"/>
+                <RadioButton fx:id="tgOriginSizeMDPI" text="mdpi(1.00x)" toggleGroup="$tggOriginSize"/>
+                <RadioButton fx:id="tgOriginSizeHDPI" text="hdpi(1.50x)" toggleGroup="$tggOriginSize"/>
+                <RadioButton fx:id="tgOriginSizeXHDPI" text="xhdpi(2.00x)" toggleGroup="$tggOriginSize"/>
+                <RadioButton fx:id="tgOriginSizeXXHDPI" text="xxhdpi(3.00x)" toggleGroup="$tggOriginSize"/>
+                <RadioButton fx:id="tgOriginSizeXXXHDPI" text="xxxhdpi(4.00x)" toggleGroup="$tggOriginSize"/>
+            </VBox>
+            <Separator VBox.vgrow="ALWAYS"/>
+
+            <Label text="Export to:"/>
+            <CheckBox fx:id="chbxDestinationSizeLDPI" text="ldpi(0.75x)"/>
+            <CheckBox fx:id="chbxDestinationSizeMDPI" selected="true" text="mdpi(1.00x)"/>
+            <CheckBox fx:id="chbxDestinationSizeHDPI" selected="true" text="hdpi(1.50x)"/>
+            <CheckBox fx:id="chbxDestinationSizeXHDPI" selected="true" text="xhdpi(2.00x)"/>
+            <CheckBox fx:id="chbxDestinationSizeXXHDPI" selected="true" text="xxhdpi(3.00x)"/>
+            <CheckBox fx:id="chbxDestinationSizeXXXHDPI" text="xxxhdpi(4.00x)"/>
+            <Separator VBox.vgrow="ALWAYS"/>
+
+            <HBox spacing="4">
+                <Label text="Name"/>
+                <TextField fx:id="fName" VBox.vgrow="ALWAYS"/>
+            </HBox>
+            <Button fx:id="btnSave" VBox.vgrow="ALWAYS" onAction="#onClick" text="Save"/>
+        </VBox>
+    </right>
+</BorderPane>
