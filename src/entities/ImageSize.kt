@@ -6,4 +6,6 @@ package entities
 class ImageSize(var width: Int, var height: Int) {
 
     fun scale(ratio: Double): ImageSize = ImageSize((width * ratio).toInt(), (height * ratio).toInt())
+
+    override fun toString(): String = "ImageSize(width=$width, height=$height)"
 }

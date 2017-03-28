@@ -20,6 +20,7 @@ import javax.imageio.ImageIO
 
 /**
  * Created by vladstarikov on 2/9/17.
+ * MainController
  */
 
 class MainController : Initializable {
@@ -106,12 +107,13 @@ class MainController : Initializable {
         enableSizesListeners()
         tggOriginSize.selectedToggleProperty().addListener({ observable, oldValue, newValue ->
             when (newValue) {
-                tgOriginSizeLDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / LDPI)
-                tgOriginSizeMDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / MDPI)
-                tgOriginSizeHDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / HDPI)
-                tgOriginSizeXHDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / XHDPI)
-                tgOriginSizeXXHDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / XXHDPI)
-                tgOriginSizeXXXHDPI -> image!!.sizeDp = image!!.sizePx.scale(1 / XXXHDPI)
+                tgOriginSizeCustom -> image!!.setOriginScale(1.0)
+                tgOriginSizeLDPI -> image!!.setOriginScale(LDPI)
+                tgOriginSizeMDPI -> image!!.setOriginScale(MDPI)
+                tgOriginSizeHDPI -> image!!.setOriginScale(HDPI)
+                tgOriginSizeXHDPI -> image!!.setOriginScale(XHDPI)
+                tgOriginSizeXXHDPI -> image!!.setOriginScale(XXHDPI)
+                tgOriginSizeXXXHDPI -> image!!.setOriginScale(XXXHDPI)
             }
             updateSizesFields()
             updateDestinationSizes()
@@ -134,25 +136,28 @@ class MainController : Initializable {
 
     @FXML
     private fun onClick(event: ActionEvent) {
-        if (event.source == btnOpen) {
-            val file = FileChooser().showOpenDialog(null)
-            val rawImage = openImage(file)
-            if (rawImage != null) {
-                image = ImageEntity(rawImage, file.nameWithoutExtension)
-                imgPreview.image = SwingFXUtils.toFXImage(rawImage, null)
-                fName.text = image!!.name
-                updateSizesFields()
-                updateOriginSizes()
-                updateDestinationSizes()
-                containerRight.isDisable = false
-            } else if (file != null) {
-                Alert(Alert.AlertType.ERROR, "Cant open file").show()
+        when (event.source) {
+            btnOpen -> {
+                val file = FileChooser().showOpenDialog(null)
+                val rawImage = openImage(file)
+                if (rawImage != null) {
+                    image = ImageEntity(rawImage, file.nameWithoutExtension)
+                    imgPreview.image = SwingFXUtils.toFXImage(rawImage, null)
+                    fName.text = image!!.name
+                    updateSizesFields()
+                    updateOriginSizes()
+                    updateDestinationSizes()
+                    containerRight.isDisable = false
+                } else if (file != null) {
+                    Alert(Alert.AlertType.ERROR, "Cant open file").show()
+                }
             }
-        } else if (event.source == btnSave) {
-            val chooser = DirectoryChooser()
-            val directory = chooser.showDialog(null)
-            if (directory != null) {
-                save(directory)
+            btnSave -> {
+                val chooser = DirectoryChooser()
+                val directory = chooser.showDialog(null)
+                if (directory != null) {
+                    save(directory)
+                }
             }
         }
     }
@@ -185,22 +190,22 @@ class MainController : Initializable {
     }
 
     private fun updateDestinationSizes() {
-        val ldpi = image!!.sizeDp.scale(LDPI)
+        val ldpi = image!!.getScaledSize(LDPI)
         chbxDestinationSizeLDPI.text = "ldpi(0.75x) - ${ldpi.width}x${ldpi.height} px"
 
-        val mdpi = image!!.sizeDp.scale(MDPI)
+        val mdpi = image!!.getScaledSize(MDPI)
         chbxDestinationSizeMDPI.text = "mdpi(1.00x) - ${mdpi.width}x${mdpi.height} px"
 
-        val hdpi = image!!.sizeDp.scale(HDPI)
+        val hdpi = image!!.getScaledSize(HDPI)
         chbxDestinationSizeHDPI.text = "hdpi(1.50x) - ${hdpi.width}x${hdpi.height} px"
 
-        val xhdpi = image!!.sizeDp.scale(XHDPI)
+        val xhdpi = image!!.getScaledSize(XHDPI)
         chbxDestinationSizeXHDPI.text = "xhdpi(2.00x) - ${xhdpi.width}x${xhdpi.height} px"
 
-        val xxhdpi = image!!.sizeDp.scale(XXHDPI)
+        val xxhdpi = image!!.getScaledSize(XXHDPI)
         chbxDestinationSizeXXHDPI.text = "xxhdpi(3.00x) - ${xxhdpi.width}x${xxhdpi.height} px"
 
-        val xxxhdpi = image!!.sizeDp.scale(XXXHDPI)
+        val xxxhdpi = image!!.getScaledSize(XXXHDPI)
         chbxDestinationSizeXXXHDPI.text = "xxxhdpi(4.00x) - ${xxxhdpi.width}x${xxxhdpi.height} px"
     }
 
@@ -227,7 +232,7 @@ class MainController : Initializable {
 
     private fun save(directory: File, ratio: Double) {
         if (directory.exists() || directory.mkdir()) {
-            val size = image!!.sizeDp.scale(ratio)
+            val size = image!!.getScaledSize(ratio)
             val outputImg = Scalr.resize(image!!.img, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, size.width, size.width)
             ImageIO.write(outputImg, "png", File(directory, image!!.name + ".png"))
         }
