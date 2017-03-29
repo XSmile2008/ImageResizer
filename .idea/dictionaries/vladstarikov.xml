@@ -2,11 +2,15 @@
   <dictionary name="vladstarikov">
     <words>
       <w>chbx</w>
+      <w>cobx</w>
       <w>hdpi</w>
+      <w>lanczos</w>
       <w>ldpi</w>
       <w>mdpi</w>
       <w>resized</w>
       <w>resizer</w>
+      <w>scalr</w>
+      <w>thumbnailator</w>
       <w>xhdpi</w>
       <w>xxhdpi</w>
       <w>xxxhdpi</w>

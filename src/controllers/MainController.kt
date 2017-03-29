@@ -1,6 +1,9 @@
 package controllers
 
+import com.mortennobel.imagescaling.experimental.ResampleOpSingleThread
 import entities.ImageEntity
+import enum.Algorithm
+import enum.JavaImageScalingFilters
 import javafx.beans.value.ChangeListener
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.ActionEvent
@@ -11,8 +14,10 @@ import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
+import net.coobird.thumbnailator.Thumbnailator
 import org.imgscalr.Scalr
 import utils.openImage
+import java.awt.image.BufferedImage
 import java.io.File
 import java.net.URL
 import java.util.*
@@ -57,6 +62,9 @@ class MainController : Initializable {
     @FXML lateinit var chbxDestinationSizeXHDPI: CheckBox
     @FXML lateinit var chbxDestinationSizeXXHDPI: CheckBox
     @FXML lateinit var chbxDestinationSizeXXXHDPI: CheckBox
+
+    @FXML lateinit var cobxAlgorithm: ComboBox<Algorithm>
+    @FXML lateinit var cobxMethod: ComboBox<String>
 
     @FXML lateinit var fName: TextField
     @FXML lateinit var btnSave: Button
@@ -105,6 +113,7 @@ class MainController : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         enableSizesListeners()
+
         tggOriginSize.selectedToggleProperty().addListener({ observable, oldValue, newValue ->
             when (newValue) {
                 tgOriginSizeCustom -> image!!.setOriginScale(1.0)
@@ -118,10 +127,35 @@ class MainController : Initializable {
             updateSizesFields()
             updateDestinationSizes()
         })
+
         fName.textProperty().addListener({ observable, oldValue, newValue ->
             image!!.name = newValue
             btnSave.isDisable = newValue.isEmpty()
         })
+
+        cobxAlgorithm.items.addAll(Algorithm.values())
+        cobxAlgorithm.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
+            @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+            when (newValue) {
+                Algorithm.Thumbnailator -> {
+                    cobxMethod.isDisable = true
+                    cobxMethod.items.clear()
+                }
+                Algorithm.JavaImageScaling -> {
+                    cobxMethod.isDisable = false
+                    cobxMethod.items.clear()
+                    cobxMethod.items.addAll(JavaImageScalingFilters.values().map { it -> it.name })
+                    cobxMethod.selectionModel.select(JavaImageScalingFilters.Lanczos3.name)
+                }
+                Algorithm.Scalr -> {
+                    cobxMethod.isDisable = false
+                    cobxMethod.items.clear()
+                    cobxMethod.items.addAll(Scalr.Method.values().map { it -> it.name })
+                    cobxMethod.selectionModel.select(Scalr.Method.ULTRA_QUALITY.name)
+                }
+            }
+        }
+        cobxAlgorithm.selectionModel.select(Algorithm.Thumbnailator)
     }
 
     private fun enableSizesListeners() {
@@ -233,8 +267,25 @@ class MainController : Initializable {
     private fun save(directory: File, ratio: Double) {
         if (directory.exists() || directory.mkdir()) {
             val size = image!!.getScaledSize(ratio)
-            val outputImg = Scalr.resize(image!!.img, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, size.width, size.width)
-            ImageIO.write(outputImg, "png", File(directory, image!!.name + ".png"))
+            var outputImg: BufferedImage? = null
+
+            @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+            when (cobxAlgorithm.selectionModel.selectedItem) {
+                Algorithm.Thumbnailator -> {
+                    outputImg = Thumbnailator.createThumbnail(image!!.img, size.width, size.height)
+                }
+                Algorithm.JavaImageScaling -> {
+                    val op = ResampleOpSingleThread(size.width, size.height)
+                    op.filter = JavaImageScalingFilters.valueOf(cobxMethod.value).filter
+                    outputImg = op.filter(image!!.img, null)
+                }
+                Algorithm.Scalr -> {
+                    val method = Scalr.Method.valueOf(cobxMethod.value)
+                    outputImg = Scalr.resize(image!!.img, method, Scalr.Mode.AUTOMATIC, size.width, size.width)
+                }
+            }
+
+            ImageIO.write(outputImg, "png", File(directory, "${image!!.name}.png"))
         }
     }
 }

@@ -48,5 +48,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="org.imgscalr:imgscalr-lib:4.2" level="project" />
+    <orderEntry type="library" name="com.mortennobel:java-image-scaling:0.8.6" level="project" />
+    <orderEntry type="library" name="net.coobird:thumbnailator:0.4.8" level="project" />
   </component>
 </module>

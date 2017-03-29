@@ -9,14 +9,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <BorderPane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.112"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
 
@@ -43,25 +43,16 @@
             <Label text="Asset size:"/>
 
             <GridPane hgap="4" vgap="4">
-                <columnConstraints>
-                    <ColumnConstraints/>
-                    <ColumnConstraints/>
-                    <ColumnConstraints/>
-                    <ColumnConstraints/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints/>
-                    <RowConstraints/>
-                </rowConstraints>
                 <Label text="Width" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="fWith" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="fWith" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <Label text="dp" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
                 <Label text="Height" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="fHeight" GridPane.columnIndex="1" GridPane.rowIndex="1" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="fHeight" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Label text="dp" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-                <CheckBox fx:id="chbxLock" text="lock" selected="true" GridPane.rowIndex="0" GridPane.rowSpan="2" GridPane.columnIndex="3"/>
+                <CheckBox fx:id="chbxLock" text="lock" selected="true" GridPane.rowIndex="0" GridPane.rowSpan="2"
+                          GridPane.columnIndex="3"/>
             </GridPane>
 
             <VBox spacing="4">
@@ -85,6 +76,18 @@
             <CheckBox fx:id="chbxDestinationSizeXHDPI" selected="true" text="xhdpi(2.00x)"/>
             <CheckBox fx:id="chbxDestinationSizeXXHDPI" selected="true" text="xxhdpi(3.00x)"/>
             <CheckBox fx:id="chbxDestinationSizeXXXHDPI" text="xxxhdpi(4.00x)"/>
+            <Separator VBox.vgrow="ALWAYS"/>
+
+            <GridPane hgap="4" vgap="4">
+                <columnConstraints>
+
+                </columnConstraints>
+                <Label text="Algorithm" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ComboBox fx:id="cobxAlgorithm" promptText="Algorithm" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Method" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <ComboBox fx:id="cobxMethod" promptText="Method" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            </GridPane>
             <Separator VBox.vgrow="ALWAYS"/>
 
             <HBox spacing="4">

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="com.mortennobel:java-image-scaling:0.8.6" type="repository">
+    <properties maven-id="com.mortennobel:java-image-scaling:0.8.6" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/java-image-scaling-0.8.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/filters-2.0.235.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
