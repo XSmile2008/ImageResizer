@@ -116,7 +116,7 @@ class MainController : Initializable {
 
         tggOriginSize.selectedToggleProperty().addListener({ observable, oldValue, newValue ->
             when (newValue) {
-                tgOriginSizeCustom -> image!!.setOriginScale(1.0)
+                tgOriginSizeCustom -> image!!.setOriginScale(MDPI)
                 tgOriginSizeLDPI -> image!!.setOriginScale(LDPI)
                 tgOriginSizeMDPI -> image!!.setOriginScale(MDPI)
                 tgOriginSizeHDPI -> image!!.setOriginScale(HDPI)

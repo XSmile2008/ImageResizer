@@ -78,15 +78,26 @@
             <CheckBox fx:id="chbxDestinationSizeXXXHDPI" text="xxxhdpi(4.00x)"/>
             <Separator VBox.vgrow="ALWAYS"/>
 
-            <GridPane hgap="4" vgap="4">
+            <GridPane hgap="4" vgap="4" maxWidth="Infinity">
                 <columnConstraints>
-
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
                 </columnConstraints>
                 <Label text="Algorithm" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <ComboBox fx:id="cobxAlgorithm" promptText="Algorithm" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <ComboBox
+                        fx:id="cobxAlgorithm"
+                        maxWidth="Infinity"
+                        promptText="Algorithm"
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="0"/>
 
                 <Label text="Method" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <ComboBox fx:id="cobxMethod" promptText="Method" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <ComboBox
+                        fx:id="cobxMethod"
+                        maxWidth="Infinity"
+                        promptText="Method"
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="1"/>
             </GridPane>
             <Separator VBox.vgrow="ALWAYS"/>
 
