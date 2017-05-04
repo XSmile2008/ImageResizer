@@ -7,7 +7,7 @@ import com.mortennobel.imagescaling.ResampleFilters
  * Created by vladstarikov on 3/29/17.
  */
 
-enum class JavaImageScalingFilters(val filter: ResampleFilter) {
+enum class JavaImageScalingFilter(val filter: ResampleFilter) {
     Bell(ResampleFilters.getBellFilter()),
     BiCubic(ResampleFilters.getBiCubicFilter()),
     BiCubicHighFreqResponse(ResampleFilters.getBiCubicHighFreqResponse()),

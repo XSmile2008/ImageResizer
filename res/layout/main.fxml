@@ -80,7 +80,7 @@
 
             <GridPane hgap="4" vgap="4" maxWidth="Infinity">
                 <columnConstraints>
-                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="NEVER"/>
                     <ColumnConstraints hgrow="ALWAYS"/>
                 </columnConstraints>
                 <Label text="Algorithm" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -98,13 +98,23 @@
                         promptText="Method"
                         GridPane.columnIndex="1"
                         GridPane.rowIndex="1"/>
-            </GridPane>
-            <Separator VBox.vgrow="ALWAYS"/>
 
-            <HBox spacing="4">
-                <Label text="Name"/>
-                <TextField fx:id="fName" VBox.vgrow="ALWAYS"/>
-            </HBox>
+                <Separator GridPane.columnIndex="0"
+                           GridPane.rowIndex="2"
+                           GridPane.columnSpan="2"
+                           GridPane.hgrow="ALWAYS"/>
+
+                <Label text="Directory prefix" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="fDirectoryPrefix"
+                           text="drawable"
+                           maxWidth="Infinity"
+                           GridPane.columnIndex="1"
+                           GridPane.rowIndex="3"/>
+
+                <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="fName" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            </GridPane>
+
             <Button fx:id="btnSave" VBox.vgrow="ALWAYS" onAction="#onClick" text="Save"/>
         </VBox>
     </right>
