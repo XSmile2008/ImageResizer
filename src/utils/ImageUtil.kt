@@ -26,14 +26,14 @@ fun openImage(file: File): BufferedImage? {
     }
 }
 
-fun save(directory: File, prefix: String, image: ImageEntity, scales: List<AndroidScale>, algorithm: Algorithm, method: Enum<*>) {
+fun save(directory: File, prefix: String, image: ImageEntity, scales: List<AndroidScale>, algorithm: Algorithm, method: Enum<*>?) {
     scales.forEach {
         val subDirectory = File(directory, "$prefix-${it.name.toLowerCase()}")
         save(subDirectory, image, it.ratio, algorithm, method)
     }
 }
 
-fun save(directory: File, image: ImageEntity, ratio: Double, algorithm: Algorithm, method: Enum<*>) {
+fun save(directory: File, image: ImageEntity, ratio: Double, algorithm: Algorithm, method: Enum<*>?) {
     if (directory.exists() || directory.mkdir()) {
         val size = image.getScaledSize(ratio)
         var outputImg: BufferedImage? = null

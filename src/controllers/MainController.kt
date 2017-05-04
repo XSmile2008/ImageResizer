@@ -19,6 +19,7 @@ import utils.formatDestinationSize
 import utils.formatOriginSize
 import utils.openImage
 import utils.save
+import widgets.ImagePreview
 import java.net.URL
 import java.util.*
 
@@ -33,7 +34,7 @@ class MainController : Initializable {
 
     @FXML lateinit var btnOpen: Button
 
-    @FXML lateinit var imgPreview: ImageView
+    @FXML lateinit var imgPreview: ImagePreview
 
     @FXML lateinit var fWith: TextField
     @FXML lateinit var fHeight: TextField
@@ -165,11 +166,11 @@ class MainController : Initializable {
     private fun onClick(event: ActionEvent) {
         when (event.source) {
             btnOpen -> {
-                val file = FileChooser().showOpenDialog(null)
+                val file = FileChooser().showOpenDialog(btnOpen.scene.window)
                 val rawImage = openImage(file)
                 if (rawImage != null) {
                     image = ImageEntity(rawImage, file.nameWithoutExtension)
-                    imgPreview.image = SwingFXUtils.toFXImage(rawImage, null)
+                    imgPreview.setImage(SwingFXUtils.toFXImage(rawImage, null))
                     fName.text = image!!.name
                     updateSizesFields()
                     updateOriginSizes()
@@ -181,7 +182,7 @@ class MainController : Initializable {
             }
             btnSave -> {
                 val chooser = DirectoryChooser()
-                val directory = chooser.showDialog(null)
+                val directory = chooser.showDialog(btnSave.scene.window)
                 if (directory != null) {
                     val scales = ArrayList<AndroidScale>()
                     if (chbxDestinationSizeLDPI.isSelected) {

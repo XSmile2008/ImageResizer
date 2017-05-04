@@ -13,10 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import widgets.ImagePreview?>
 <BorderPane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.112"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
 
@@ -30,9 +29,7 @@
     </top>
 
     <center>
-        <Pane style="-fx-background-color: gray;">
-            <ImageView fx:id="imgPreview"/>
-        </Pane>
+        <ImagePreview fx:id="imgPreview" style="-fx-background-color: gray;"/>
     </center>
 
     <right>
@@ -51,7 +48,11 @@
                 <TextField fx:id="fHeight" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Label text="dp" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-                <CheckBox fx:id="chbxLock" text="lock" selected="true" GridPane.rowIndex="0" GridPane.rowSpan="2"
+                <CheckBox fx:id="chbxLock"
+                          text="lock"
+                          selected="true"
+                          GridPane.rowIndex="0"
+                          GridPane.rowSpan="2"
                           GridPane.columnIndex="3"/>
             </GridPane>
 
