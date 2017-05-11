@@ -11,7 +11,6 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.*
-import javafx.scene.image.ImageView
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
 import org.imgscalr.Scalr
@@ -165,72 +164,73 @@ class MainController : Initializable {
     @FXML
     private fun onClick(event: ActionEvent) {
         when (event.source) {
-            btnOpen -> {
-                val file = FileChooser().showOpenDialog(btnOpen.scene.window)
-                val rawImage = openImage(file)
+            btnOpen -> FileChooser().showOpenDialog(btnOpen.scene.window)?.let {
+                val rawImage = openImage(it)
                 if (rawImage != null) {
-                    image = ImageEntity(rawImage, file.nameWithoutExtension)
+                    image = ImageEntity(rawImage, it.nameWithoutExtension)
                     imgPreview.setImage(SwingFXUtils.toFXImage(rawImage, null))
                     fName.text = image!!.name
                     updateSizesFields()
                     updateOriginSizes()
                     updateDestinationSizes()
                     containerRight.isDisable = false
-                } else if (file != null) {
+                } else {
                     Alert(Alert.AlertType.ERROR, "Can't open file").show()
                 }
             }
-            btnSave -> {
-                val chooser = DirectoryChooser()
-                val directory = chooser.showDialog(btnSave.scene.window)
-                if (directory != null) {
-                    val scales = ArrayList<AndroidScale>()
-                    if (chbxDestinationSizeLDPI.isSelected) {
-                        scales.add(AndroidScale.LDPI)
-                    }
-                    if (chbxDestinationSizeMDPI.isSelected) {
-                        scales.add(AndroidScale.MDPI)
-                    }
-                    if (chbxDestinationSizeHDPI.isSelected) {
-                        scales.add(AndroidScale.HDPI)
-                    }
-                    if (chbxDestinationSizeXHDPI.isSelected) {
-                        scales.add(AndroidScale.XHDPI)
-                    }
-                    if (chbxDestinationSizeXXHDPI.isSelected) {
-                        scales.add(AndroidScale.XXHDPI)
-                    }
-                    if (chbxDestinationSizeXXXHDPI.isSelected) {
-                        scales.add(AndroidScale.XXXHDPI)
-                    }
-                    save(directory, fDirectoryPrefix.text, image!!, scales, cobxAlgorithm.value, cobxMethod.value)
+            btnSave -> DirectoryChooser().showDialog(btnSave.scene.window)?.let {
+                val scales = ArrayList<AndroidScale>()
+                if (chbxDestinationSizeLDPI.isSelected) {
+                    scales.add(AndroidScale.LDPI)
                 }
+                if (chbxDestinationSizeMDPI.isSelected) {
+                    scales.add(AndroidScale.MDPI)
+                }
+                if (chbxDestinationSizeHDPI.isSelected) {
+                    scales.add(AndroidScale.HDPI)
+                }
+                if (chbxDestinationSizeXHDPI.isSelected) {
+                    scales.add(AndroidScale.XHDPI)
+                }
+                if (chbxDestinationSizeXXHDPI.isSelected) {
+                    scales.add(AndroidScale.XXHDPI)
+                }
+                if (chbxDestinationSizeXXXHDPI.isSelected) {
+                    scales.add(AndroidScale.XXXHDPI)
+                }
+                save(it, fDirectoryPrefix.text, image!!, scales, cobxAlgorithm.value, cobxMethod.value)
             }
         }
     }
 
     private fun updateSizesFields() {
-        disableSizesListeners()
-        fWith.text = image!!.sizeDp.width.toString()
-        fHeight.text = image!!.sizeDp.height.toString()
-        enableSizesListeners()
+        image?.let {
+            disableSizesListeners()
+            fWith.text = it.sizeDp.width.toString()
+            fHeight.text = it.sizeDp.height.toString()
+            enableSizesListeners()
+        }
     }
 
     private fun updateOriginSizes() {
-        tgOriginSizeLDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.LDPI)
-        tgOriginSizeMDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.MDPI)
-        tgOriginSizeHDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.HDPI)
-        tgOriginSizeXHDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.XHDPI)
-        tgOriginSizeXXHDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.XXHDPI)
-        tgOriginSizeXXXHDPI.text = formatOriginSize(image!!.sizePx, AndroidScale.XXXHDPI)
+        image?.let {
+            tgOriginSizeLDPI.text = formatOriginSize(it.sizePx, AndroidScale.LDPI)
+            tgOriginSizeMDPI.text = formatOriginSize(it.sizePx, AndroidScale.MDPI)
+            tgOriginSizeHDPI.text = formatOriginSize(it.sizePx, AndroidScale.HDPI)
+            tgOriginSizeXHDPI.text = formatOriginSize(it.sizePx, AndroidScale.XHDPI)
+            tgOriginSizeXXHDPI.text = formatOriginSize(it.sizePx, AndroidScale.XXHDPI)
+            tgOriginSizeXXXHDPI.text = formatOriginSize(it.sizePx, AndroidScale.XXXHDPI)
+        }
     }
 
     private fun updateDestinationSizes() {
-        chbxDestinationSizeLDPI.text = formatDestinationSize(image!!, AndroidScale.LDPI)
-        chbxDestinationSizeMDPI.text = formatDestinationSize(image!!, AndroidScale.MDPI)
-        chbxDestinationSizeHDPI.text = formatDestinationSize(image!!, AndroidScale.HDPI)
-        chbxDestinationSizeXHDPI.text = formatDestinationSize(image!!, AndroidScale.XHDPI)
-        chbxDestinationSizeXXHDPI.text = formatDestinationSize(image!!, AndroidScale.XXHDPI)
-        chbxDestinationSizeXXXHDPI.text = formatDestinationSize(image!!, AndroidScale.XXXHDPI)
+        image?.let {
+            chbxDestinationSizeLDPI.text = formatDestinationSize(it, AndroidScale.LDPI)
+            chbxDestinationSizeMDPI.text = formatDestinationSize(it, AndroidScale.MDPI)
+            chbxDestinationSizeHDPI.text = formatDestinationSize(it, AndroidScale.HDPI)
+            chbxDestinationSizeXHDPI.text = formatDestinationSize(it, AndroidScale.XHDPI)
+            chbxDestinationSizeXXHDPI.text = formatDestinationSize(it, AndroidScale.XXHDPI)
+            chbxDestinationSizeXXXHDPI.text = formatDestinationSize(it, AndroidScale.XXXHDPI)
+        }
     }
 }
